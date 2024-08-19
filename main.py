@@ -1,21 +1,21 @@
-#Road crossing game
+#Road crossing game: Rabbit and Tortoise
 #@tusharharyana
 
 import time
 from turtle import Screen
 
-from car_manager import CarManager
+from rabbit_manager import RabbitManager
 from player import Player
 from scoreboard import Scoreboard
 
 #To start game again.
 def reset_game():
-    global player, scoreboard, car_manager, game_is_on
+    global player, scoreboard, rabbit_manager, game_is_on
     screen.clear()
     screen.tracer(0)
     
     player = Player()
-    car_manager = CarManager()
+    rabbit_manager = RabbitManager()
     scoreboard = Scoreboard()
     game_is_on = True
     
@@ -40,7 +40,7 @@ def game_over():
     
 screen = Screen()
 screen.setup(width=600,height=600)
-screen.title("Road Crossing Game")
+screen.title("Rabbit and Tortoise")
 screen.tracer(0)
 
 reset_game() #Initilize the game.
@@ -50,13 +50,13 @@ while True:
     if game_is_on:
         time.sleep(0.1)
         screen.update()
-        car_manager.create_car()
-        car_manager.move_cars()
+        rabbit_manager.create_rabbit()
+        rabbit_manager.move_rabbit()
         
         #Detect collision with cars
         
-        for car in car_manager.all_cars:
-            if car.distance(player) < 20:
+        for rabbit in rabbit_manager.all_rabbit:
+            if rabbit.distance(player) < 20:
                 game_is_on = False
                 scoreboard.game_over()
                 game_over()
@@ -65,7 +65,7 @@ while True:
         #Detect sucessfull crossing
         if player.is_at_finish_line():
             player.go_to_start()
-            car_manager.level_up()
+            rabbit_manager.level_up()
             scoreboard.increase_level()
     else:
         game_over()
